@@ -1,30 +1,24 @@
-<h1>Listing trips</h1>
+<div class="page-header">
+  <h1>Listing trips</h1>
+</div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Duration</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+  
 
-  <tbody>
-    <% @trips.each do |trip| %>
-      <tr>
-        <td><%= trip.name %></td>
-        <td><%= trip.duration %></td>
-        <td><%= link_to 'See Recommendations' %></td>
-        <td><%= link_to 'Show', trip %></td>
-        <td><%= link_to 'Edit', edit_trip_path(trip) %></td>
-        <td><%= link_to 'Destroy', trip, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% @trips.each do |trip| %>
+
+  <%= trip.name %>
+  <%= trip.duration %>
+  <%= link_to 'See Recommendations' %>
+  <%= link_to 'Show', trip %> 
+  <%= link_to 'Edit', edit_trip_path(trip) %>
+  <%= link_to 'Destroy', trip, method: :delete, data: { confirm: 'Are you sure?' } %></p>
+
+</div>  
+
+<% end %>
+
 
 <br>
 
-<%= link_to 'New Trip', new_trip_path %>
+<%= link_to 'New Trip', new_trip_path, :class=>"btn btn-primary btn-lg" %>
+ 
