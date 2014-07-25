@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    @trips = Trip.find(params[:trip_id])
   end
 
   # GET /posts/1
@@ -14,40 +14,43 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
-    @post = Post.new
+    @trips = Trip.find(params[:trip_id])
+    @posts = @trips.posts.new
   end
 
   # GET /posts/1/edit
   def edit
+    @trips = Trip.find(params[:trip_id])
+    @posts = @trips.posts.find(params[:id])
   end
 
   # POST /posts
   # POST /posts.json
   def create
-    @post = Post.new(post_params)
-
-    respond_to do |format|
-      if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @post }
+    @trips = Trip.find(params[:trip_id])
+    @posts = @trips.posts.new(post_params)
+   
+      if @posts.save
+       flash[:success] = "Added new post"
+       redirect_to trip_posts_path 
       else
-        format.html { render action: 'new' }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
+       flash[:error] = "There was a problem"
+       render action: :new
       end
-    end
   end
 
   # PATCH/PUT /posts/1
   # PATCH/PUT /posts/1.json
   def update
-    respond_to do |format|
-      if @post.update(post_params)
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
-      end
+    @trips = Trip.find(params[:trip_id])
+    @posts = @trips.posts.find(params[:id])
+
+    if @posts.update_attributes(post_params)
+      flash[:success] = "Updated post"
+      redirect_to trip_posts_path
+    else
+      flash[:error] = "There was a problem with this update"
+      render action: :edit
     end
   end
 
@@ -69,6 +72,6 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:trip_id, :site, :description)
+      params[:post].permit(:trip_id, :site, :description)
     end
 end

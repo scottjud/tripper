@@ -1,31 +1,14 @@
-<h1>Listing posts</h1>
+<h1><%= @trips.name %></h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Trip</th>
-      <th>Site</th>
-      <th>Description</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+<div>
+  <% @trips.posts.each do |post| %>
+    <div class="recommendations">
+      <strong><%= post.site %></strong>
+      <p><%= post.description %></p>
+      <%= link_to "Edit", edit_trip_post_path(@trips.id, post.id) %>
+    </div>
+  <% end %>
+</div>
 
-  <tbody>
-    <% @posts.each do |post| %>
-      <tr>
-        <td><%= post.trip %></td>
-        <td><%= post.site %></td>
-        <td><%= post.description %></td>
-        <td><%= link_to 'Show', post %></td>
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Post', new_post_path %>
+<%= link_to "New Recommendation", new_trip_post_path, :class=>"btn btn-primary" %>
+<%= link_to "Back to My Trips", trips_path %>
