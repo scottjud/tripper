@@ -52,11 +52,13 @@ class PostsController < ApplicationController
   # DELETE /posts/1
   # DELETE /posts/1.json
   def destroy
-    @post.destroy
-    respond_to do |format|
-      format.html { redirect_to posts_url }
-      format.json { head :no_content }
+    @posts = @trips.posts.find(params[:id])
+    if @posts.destroy
+      flash[:success] = "Post was deleted."
+    else
+      flash[:error] = "Post could not be deleted."
     end
+    redirect_to trip_posts_path
   end
 
   private
