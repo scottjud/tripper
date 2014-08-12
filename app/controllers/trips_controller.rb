@@ -1,4 +1,5 @@
 class TripsController < ApplicationController
+  before_action :require_user
   before_action :set_trip, only: [:show, :edit, :update, :destroy]
 
   # GET /trips
