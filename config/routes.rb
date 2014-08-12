@@ -3,8 +3,14 @@ Tripper::Application.routes.draw do
   resources :user_sessions, only: [:new, :create]
 
   resources :trips do
-    resources :posts
+    resources :posts do
+      member do
+        patch :complete
+      end
+    end
   end
+
+  root 'trips#index'
 
 
 
